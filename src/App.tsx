@@ -4,6 +4,7 @@ import { ImageUploader } from './components/ImageUploader';
 import { RecordCard } from './components/RecordCard';
 import { ProcessingIndicator } from './components/ProcessingIndicator';
 import { ErrorMessage } from './components/ErrorMessage';
+import { ApiKeyInput } from './components/ApiKeyInput';
 import { processImage } from './services/ocrService';
 import { validateImage } from './utils/imageUtils';
 import { Patient } from './types';
@@ -73,7 +74,7 @@ function App() {
           </div>
           <div className="flex items-center space-x-4">
             <a
-              href="https://github.com/swarpya"
+              href="https://github.com/swaroopIngale"
               target="_blank"
               rel="noopener noreferrer"
               className="text-apple-gray hover:text-apple-black transition-colors"
@@ -104,6 +105,8 @@ function App() {
               Powerful OCR technology. Effortless conversion.
             </p>
           </div>
+
+          <ApiKeyInput />
 
           <div className="bg-white rounded-2xl shadow-sm border border-gray-200/50 overflow-hidden mb-12">
             <div className="p-8">

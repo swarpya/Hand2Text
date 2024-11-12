@@ -1,21 +1,23 @@
 export async function processImage(imageData: string | File): Promise<string> {
+  const apiKey = localStorage.getItem('huggingface_api_key');
+  if (!apiKey) {
+    throw new Error('Please set your HuggingFace API key first');
+  }
+
   try {
     let base64Image: string;
     
     if (typeof imageData === 'string') {
-      // If already base64, remove data URL prefix if present
       base64Image = imageData.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
     } else {
-      // Convert File to base64
       base64Image = await fileToBase64(imageData);
     }
 
-    // Add preprocessing parameters to improve OCR accuracy
     const response = await fetch(
       "https://api-inference.huggingface.co/models/microsoft/trocr-large-handwritten",
       {
         headers: {
-          Authorization: "Bearer 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",
+          Authorization: `Bearer ${apiKey}`,
           "Content-Type": "application/json",
         },
         method: "POST",
@@ -72,7 +74,6 @@ async function fileToBase64(file: File): Promise<string> {
     reader.readAsDataURL(file);
     reader.onload = () => {
       if (typeof reader.result === 'string') {
-        // Remove data URL prefix
         const base64 = reader.result.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
         resolve(base64);
       } else {
